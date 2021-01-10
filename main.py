@@ -43,6 +43,11 @@ def main():
     num_images = len(test_images_paths)
     print('{} Images'.format(num_images))
 
+    #load stylegan2 latent directions
+    age_dir = np.load(AGE_LATENT_DIR).astype('float32')
+    smile_dir = np.load(SMILE_LATENT_DIR).astype('float32')
+    gender_dir = np.load(GENDER_LATENT_DIR).astype('float32')
+
     # Load pretraiden weights
     ckpt = torch.load(PRETRAINED_WEIGHT, map_location='cpu')
 
