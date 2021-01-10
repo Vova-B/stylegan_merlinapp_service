@@ -15,14 +15,14 @@ from argparse import Namespace
 import torchvision.transforms as transforms
 
 from models.psp import pSp
-from utils.common import tensor2im, log_input_image
+from utils.common import tensor2im
 from scripts.align_all_parallel import align_face
 
 PRETRAINED_WEIGHT = 'psp_ffhq_encode.pt'
 TEST_DATA_DIR = './test_data'
 RESULT_DATA_PATH = './test_data_res'
 LATENT_DIRECTION_PATH = './latent_directions'
-FACE_LANDMARKS_PATH = './shape_predictor_68_face_landmarks.dat'
+FACE_LANDMARKS_PATH = 'shape_predictor_68_face_landmarks.dat'
 ALIGN_IMAGE = True
 COEFFS = [-15., -12., -9., -6., -3., 0., 3., 6., 9., 12.]
 
