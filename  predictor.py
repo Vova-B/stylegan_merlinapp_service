@@ -53,21 +53,36 @@ class Predictor:
         self.smile_direction = np.load(os.path.join(latent_dirs_p, 'smile.npy')).astype('float32')
         self.gender_direction = np.load(os.path.join(latent_dirs_p, 'gender.npy')).astype('float32')
 
+    def __base64_image_decode(self, base64_str):
+        pass
+
+    def __base64_image_encode(self, image):
+        pass 
+
     def __align_image(self, image):
         aligned_image = align_face(image, self.predictor)
         aligned_image = aligned_image.convert('RGB')
         return aligned_image
     
     def __preprocess_input(self, image):
-        pass
+        aligned_image = self.__align_image(image)
+        input_image = self.inference_transforms(image)
+        return input_image
 
     def __get_latent_directions(self, image, net):
+        inp_img = self.__preprocess_input(image)
+        with torch.no_grad():
+            enc_im, latent_dir = self.net(inp_img.to('cuda').float().unsqueeze(0),
+                                            randomize_noise=False,
+                                            return_latents=True)
+
+            latenr_dir = latenr_dir.data.cpu().numpy()
+            return latenr_dir
+
+    def __move_latent_directions(self, type, coeff):
         pass
 
-    def __move_latent_directions(self, latent_vector, latent_directions, coeff, net):
-        pass
-
-    def get_prediction(self):
+    def get_prediction(self, base64_image, type, id, coeff):
         pass
 
 
