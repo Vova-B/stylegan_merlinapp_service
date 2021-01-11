@@ -29,13 +29,13 @@ from configs.paths_config import model_paths
 SHAPE_PREDICTOR_PATH = model_paths["shape_predictor"]
 
 
-def get_landmark(filepath, predictor):
+def get_landmark(np_image, predictor):
 	"""get landmark with dlib
 	:return: np.array shape=(68, 2)
 	"""
 	detector = dlib.get_frontal_face_detector()
 
-	img = dlib.load_rgb_image(filepath)
+	img = np_image
 	dets = detector(img, 1)
 
 	for k, d in enumerate(dets):
@@ -49,13 +49,13 @@ def get_landmark(filepath, predictor):
 	return lm
 
 
-def align_face(filepath, predictor):
+def align_face(image, predictor):
 	"""
 	:param filepath: str
 	:return: PIL Image
 	"""
 
-	lm = get_landmark(filepath, predictor)
+	lm = get_landmark(np.array(image), predictor)
 
 	lm_chin = lm[0: 17]  # left-right
 	lm_eyebrow_left = lm[17: 22]  # left-right
@@ -87,7 +87,7 @@ def align_face(filepath, predictor):
 	qsize = np.hypot(*x) * 2
 
 	# read image
-	img = PIL.Image.open(filepath)
+	img = image
 
 	output_size = 256
 	transform_size = 256
