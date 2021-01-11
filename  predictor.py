@@ -52,6 +52,11 @@ class Predictor:
         self.age_direction = np.load(os.path.join(latent_dirs_p, 'age.npy')).astype('float32')
         self.smile_direction = np.load(os.path.join(latent_dirs_p, 'smile.npy')).astype('float32')
         self.gender_direction = np.load(os.path.join(latent_dirs_p, 'gender.npy')).astype('float32')
+
+    def __align_image(self, image):
+        aligned_image = align_face(image, self.predictor)
+        aligned_image = aligned_image.convert('RGB')
+        return aligned_image
     
     def __preprocess_input(self, image):
         pass
